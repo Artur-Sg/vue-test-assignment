@@ -10,7 +10,7 @@
         @click="showEditModal"
         >Edit</a-button
       >
-      <a-button shape="round" @click="addToCart"
+      <a-button shape="round" @click="addToCart" :disabled="isOutOfStock"
         ><template #icon><shopping-cart-outlined /></template> Add to
         cart</a-button
       ></a-space
@@ -64,6 +64,7 @@ import { defineComponent, reactive, ref, toRaw } from "vue";
 import { ShoppingCartOutlined } from "@ant-design/icons-vue";
 import { useMainStore } from "../stores/main-store";
 import { Form } from "ant-design-vue";
+import { notification } from "ant-design-vue";
 import Good from "../interfaces/Good";
 
 const useForm = Form.useForm;
@@ -96,6 +97,7 @@ export default defineComponent({
       title: "Edit item",
       submit: "Submit",
       hidden: true,
+      isOutOfStock: false,
     };
   },
 
@@ -210,11 +212,24 @@ export default defineComponent({
       const storeItem = this.mainStore.getItem(id);
 
       if (storeItem) {
-        this.mainStore.increaseCount(id);
+        this.isOutOfStock = storeItem?.count >= this.itemInstance.position;
+
+        if (this.isOutOfStock) {
+          this.openNotification();
+        } else {
+          this.mainStore.increaseCount(id);
+        }
       } else {
         this.itemInstance.costRub = this.costRub;
         this.mainStore.addItem({ count: 1, ...this.itemInstance });
       }
+    },
+
+    openNotification() {
+      notification.open({
+        message: "Sorry!",
+        description: "This item is out of stock!",
+      });
     },
   },
 

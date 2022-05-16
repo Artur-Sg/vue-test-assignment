@@ -15,8 +15,7 @@
         >
           <div v-for="item in data.items" :key="item.id">
             <app-good :item="item" :rate="currentRate" />
-          </div>
-        </a-collapse-panel> </a-collapse
+          </div> </a-collapse-panel></a-collapse
     ></a-col>
     <app-cart />
   </a-row>
@@ -106,7 +105,7 @@ export default defineComponent({
     getFreshDataByInterval() {
       setInterval(() => {
         this.getAllCurrentData();
-      }, 4000);
+      }, CONSTANTS.UPDATE_INTERVAL);
     },
 
     mapGoods(): Good {

@@ -31,16 +31,6 @@ export const useMainStore = defineStore({
       });
     },
 
-    decreaseCount(id) {
-      this.storeItems = this.storeItems.map((item) => {
-        if (item.id === id) {
-          item.count--;
-        }
-
-        return item;
-      });
-    },
-
     removeItem(idToRemove) {
       this.storeItems = this.storeItems.filter(({ id }) => id !== idToRemove);
     },
