@@ -4,17 +4,17 @@
     @exchange-rate="(val) => (exchangeRate = val)"
     :currentRate="currentRate"
   ></app-control-panel>
-  <a-row type="flex" class="goods">
+  <a-row type="flex" class="items">
     <a-col :flex="1">
       <a-divider orientation="center">Product List</a-divider>
       <a-collapse v-if="isDataAvailable" v-model:activeKey="activeKey">
         <a-collapse-panel
-          v-for="data in availableGoods"
+          v-for="data in availableItems"
           :key="data.category_id"
           :header="data.category"
         >
           <div v-for="item in data.items" :key="item.id">
-            <app-good :item="item" :rate="currentRate" />
+            <app-item :item="item" :rate="currentRate" />
           </div> </a-collapse-panel></a-collapse
     ></a-col>
     <app-cart />
@@ -28,18 +28,18 @@ import { defineComponent, ref } from "vue";
 import { getAllData } from "../api/api";
 import AppSpinner from "./AppSpinner.vue";
 import AppModeSwitch from "./AppModeSwitch.vue";
-import AppGood from "./AppGood.vue";
+import AppItem from "./item/AppItem.vue";
 import AppControlPanel from "./AppControlPanel.vue";
 import AppCart from "./AppCart.vue";
 import { CONSTANTS } from "../constants/constants";
-import GoodDTO from "../interfaces/GoodDTO";
-import Good from "../interfaces/Good";
+import ItemDefinitionResponse from "../interfaces/ItemDefinitionResponse";
+import Item from "../interfaces/Item";
 
 export default defineComponent({
   components: {
     AppSpinner,
     AppModeSwitch,
-    AppGood,
+    AppItem,
     AppControlPanel,
     AppCart,
   },
@@ -53,7 +53,7 @@ export default defineComponent({
 
   data() {
     return {
-      goods: [],
+      items: [],
       names: {},
       loading: false,
       currentRate: CONSTANTS.DEFAULT_RATE,
@@ -67,13 +67,13 @@ export default defineComponent({
   },
 
   computed: {
-    availableGoods() {
-      return this.filteredGoods();
+    availableItems() {
+      return this.filteredItems();
     },
 
     isDataAvailable() {
       return (
-        Object.keys(this.goods).length > 0 && Object.keys(this.names).length > 0
+        Object.keys(this.items).length > 0 && Object.keys(this.names).length > 0
       );
     },
   },
@@ -88,7 +88,8 @@ export default defineComponent({
       this.currentRate = this.exchangeRate;
 
       getAllData()
-        .then((res) => {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        .then((res: any) => {
           const [
             {
               Value: { Goods: goods },
@@ -96,7 +97,7 @@ export default defineComponent({
             names,
           ] = res;
 
-          this.goods = goods;
+          this.items = goods;
           this.names = names;
         })
         .finally(() => (this.loading = false));
@@ -108,8 +109,8 @@ export default defineComponent({
       }, CONSTANTS.UPDATE_INTERVAL);
     },
 
-    mapGoods(): Good {
-      return this.goods.map((good: GoodDTO) => {
+    mapItems(): Item {
+      return this.items.map((good: ItemDefinitionResponse) => {
         const item = this.names[good.G].B[good.T];
 
         return {
@@ -123,8 +124,8 @@ export default defineComponent({
       });
     },
 
-    filteredGoods() {
-      return this.mapGoods().reduce((acc, item) => {
+    filteredItems() {
+      return this.mapItems().reduce((acc, item) => {
         if (!acc[item.category_id]) {
           acc[item.category_id] = {
             category_id: item.category_id,
@@ -145,7 +146,7 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-.goods {
+.items {
   padding: 0 1em;
 }
 </style>

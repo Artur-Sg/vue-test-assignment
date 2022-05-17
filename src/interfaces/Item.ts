@@ -1,4 +1,4 @@
-export default interface Good {
+export default interface Item {
   id: number;
   name: string;
   position: number;

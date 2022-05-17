@@ -33,7 +33,7 @@
           </template></template
         >
         <template #footer
-          ><p>
+          ><p class="total">
             <b>Total amount: {{ total }} ₽</b>
           </p></template
         >
@@ -122,5 +122,9 @@ $dark-red: #3a0303;
   background-color: $light-red;
   color: $dark-red;
   border: 1px solid $dark-red;
+}
+
+.total {
+  text-align: right;
 }
 </style>

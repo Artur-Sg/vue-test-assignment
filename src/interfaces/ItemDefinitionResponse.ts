@@ -1,4 +1,4 @@
-export default interface GoodDTO {
+export default interface ItemDefinitionResponse {
   B: boolean;
   C: number;
   G: number;

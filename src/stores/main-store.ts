@@ -1,6 +1,7 @@
 import { defineStore } from "pinia";
 import { CONSTANTS } from "../constants/constants";
 import { useStorage } from "@vueuse/core";
+import type StoreItem from "../interfaces/StoreItem";
 
 export const useMainStore = defineStore({
   id: "main",
@@ -8,21 +9,21 @@ export const useMainStore = defineStore({
   state: () => {
     return {
       isAdminMode: CONSTANTS.IS_ADMIN_MODE,
-      storeItems: useStorage("store", []),
+      storeItems: useStorage("store", [] as StoreItem[]),
     };
   },
 
   actions: {
-    addItem(item) {
+    addItem(item: StoreItem) {
       this.storeItems.push(item);
     },
 
-    getItem(search_id) {
+    getItem(search_id: number) {
       return this.storeItems.find(({ id }) => id === search_id);
     },
 
-    increaseCount(id) {
-      this.storeItems = this.storeItems.map((item) => {
+    increaseCount(id: number) {
+      this.storeItems = this.storeItems.map((item: StoreItem) => {
         if (item.id === id) {
           item.count++;
         }
@@ -31,23 +32,23 @@ export const useMainStore = defineStore({
       });
     },
 
-    removeItem(idToRemove) {
+    removeItem(idToRemove: number) {
       this.storeItems = this.storeItems.filter(({ id }) => id !== idToRemove);
     },
   },
 
   getters: {
-    getItems() {
+    getItems(): StoreItem[] {
       return this.storeItems;
     },
 
-    storeIsEmpty() {
+    storeIsEmpty(): boolean {
       return this.storeItems.length <= 0;
     },
 
-    totalAmount() {
+    totalAmount(): number {
       return this.storeItems.reduce(
-        (acc, item) => acc + item.costRub * item.count,
+        (acc: number, item: StoreItem) => acc + item.costRub * item.count,
         0
       );
     },
