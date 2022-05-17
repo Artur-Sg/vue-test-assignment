@@ -8,27 +8,16 @@
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent, ref } from "vue";
+<script setup lang="ts">
+import { ref, watch } from "vue";
 import { useMainStore } from "../stores/main-store";
 import { CONSTANTS } from "../constants/constants";
 
-export default defineComponent({
-  setup() {
-    const isAdminModeOn = ref<boolean>(CONSTANTS.IS_ADMIN_MODE);
-    const modeStore = useMainStore();
+const isAdminModeOn = ref<boolean>(CONSTANTS.IS_ADMIN_MODE);
+const modeStore = useMainStore();
 
-    return {
-      isAdminModeOn,
-      modeStore,
-    };
-  },
-
-  watch: {
-    isAdminModeOn(val) {
-      this.modeStore.isAdminMode = val;
-    },
-  },
+watch(isAdminModeOn, (val) => {
+  modeStore.isAdminMode = val;
 });
 </script>
 

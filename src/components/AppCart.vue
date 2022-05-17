@@ -20,14 +20,14 @@
                 style="margin: -5px 0"
               />
               pcs
-            </div></template
-          >
+            </div>
+            <a-tag v-if="record.position <= 2" class="limited"
+              >Offer is limited</a-tag
+            >
+          </template>
           <template v-if="column.key === 'costRub'">
             {{ record.costRub }} ₽ / pc</template
           >
-          <template v-if="column.key === 'comment' && record.position <= 2">
-            <a-tag class="limited">Limited</a-tag>
-          </template>
           <template v-if="column.key === 'delete'">
             <a @click="deleteItem(record.id)">Delete</a>
           </template></template
@@ -62,10 +62,6 @@ export default defineComponent({
           title: "Amount",
           dataIndex: "count",
           key: "count",
-        },
-        {
-          title: "",
-          key: "comment",
         },
         {
           title: "Price, ₽",
@@ -119,6 +115,7 @@ $dark-red: #3a0303;
 }
 
 .limited {
+  margin-top: 15px;
   background-color: $light-red;
   color: $dark-red;
   border: 1px solid $dark-red;
