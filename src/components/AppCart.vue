@@ -1,5 +1,5 @@
 <template>
-  <a-col :flex="1">
+  <a-col>
     <a-divider orientation="center">Cart</a-divider>
     <div class="cart">
       <p v-if="isEmpty" class="empty">Cart is empty</p>
