@@ -33,7 +33,7 @@
 <script lang="ts">
 import { defineComponent, reactive, ref, toRaw } from "vue";
 import { Form } from "ant-design-vue";
-import { formRulesRef } from "./constants/formRulesRef";
+import { rulesRef } from "./constants/rulesRef";
 
 const useForm = Form.useForm;
 
@@ -72,8 +72,6 @@ export default defineComponent({
       cost: undefined,
       position: undefined,
     });
-
-    const rulesRef = formRulesRef;
 
     const { resetFields, validate, validateInfos } = useForm(
       modelRef,

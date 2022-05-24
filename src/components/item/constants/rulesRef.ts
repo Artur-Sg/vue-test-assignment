@@ -1,6 +1,6 @@
 import { reactive } from "vue";
 
-export const formRulesRef = reactive({
+export const rulesRef = reactive({
   name: [
     {
       required: true,

@@ -30,7 +30,7 @@ import AppSpinner from "./AppSpinner.vue";
 import AppModeSwitch from "./AppModeSwitch.vue";
 import AppItem from "./item/AppItem.vue";
 import AppControlPanel from "./AppControlPanel.vue";
-import AppCart from "./AppCart.vue";
+import AppCart from "./cart/AppCart.vue";
 import { CONSTANTS } from "../constants/constants";
 import ItemDefinitionResponse from "../interfaces/ItemDefinitionResponse";
 import Item from "../interfaces/Item";

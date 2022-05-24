@@ -44,7 +44,8 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import { useMainStore } from "../stores/main-store";
+import { useMainStore } from "../../stores/main-store";
+import { columns } from "./constants/columns";
 
 export default defineComponent({
   setup() {
@@ -52,27 +53,7 @@ export default defineComponent({
 
     return {
       mainStore,
-      columns: [
-        {
-          title: "Item name and description",
-          dataIndex: "name",
-          key: "name",
-        },
-        {
-          title: "Amount",
-          dataIndex: "count",
-          key: "count",
-        },
-        {
-          title: "Price, ₽",
-          dataIndex: "costRub",
-          key: "costRub",
-        },
-        {
-          title: "",
-          key: "delete",
-        },
-      ],
+      columns,
     };
   },
 
